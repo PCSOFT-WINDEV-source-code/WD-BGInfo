@@ -1,0 +1,617 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : pBackgroundInfo
+ major_version : 28
+ minor_version : 0
+ type : 7
+ description : ""
+ subtype : 0
+procedure_set :
+ identifier : 0x19ca3191021ec24e
+ internal_properties : CAAAAAgAAABGLu41kG7fjQV3iS4F72qmnKaNh5694reolNKIW0iw
+ code_elements :
+  internal_properties : CAAAAAgAAABPOo5wfzL5PtlmH9g6pVlcqG1md+uM4GM8B/k/aVja5R6ZseBzxTGWZbo12UeE8bWym5Rl91AKrNq9wTYnFyamg2lAMw==
+  type_code : 31
+  p_codes :
+   -
+     internal_properties : CAAAAAgAAABt3MeVPfUzfwOAq9WVN/TGaI3/LFHzKxHedu62qp1LU2b2tNv+6MgFujnWYqjYHUhcHFB/ERCOL+tBhXvOldfBkWO/9xtS2Omxy6Bc1hUW7GUwhBp9Mso55jWvrkirIE2ip9I0v86IFfauWVlltGngJs/xsF4afqc7AveHT0BgtpH2fuqfWOGQCA08A1q5vAvju5efzLgT7Xi63+PzEMQg9/j8LzVDgaABBMw=
+     code : |1-
+      
+      CONSTANT
+      	// Constants for Win32 API
+      	SPI_SETDESKWALLPAPER = 0x0014
+      	SPI_GETDESKWALLPAPER = 0x0073
+      	SPIF_UPDATEINIFILE   = 0x0001
+      	COLOR_DESKTOP        = 0x0001
+      	
+      	// Size of the string containing the path of the user wallpaper (for the Win32 API)
+      	SIZE_STRING        = 1024
+      	
+      	// Fonts, writing style, size, etc..
+      	TEXT_FONT      = "Arial"
+      	TEXT_SIZE      = 10
+      	TEXT_COLOR     = White
+      	
+      	// Display position
+      	POSITION_CENTER      = 1
+      	POSITION_TOP_LEFT = 2
+      	POSITION_TOP_RIGHT  = 3
+      	POSITION_BOTTOM_LEFT  = 4
+      	POSITION_BOTTOM_RIGHT   = 5
+      	
+      	// Name of the reference screen background
+      	REFERENCE_FOLDER    = "Reference\"
+      	REFERENCE_FILE    = REFERENCE_FOLDER+"reference.bmp" 
+      	
+      	// Type of screen wallpaper
+      	TYPE_STRETCHED       = "2"
+      	TYPE_FILL = "10"
+      END
+      
+      // Structure representing an information
+      STInformation is Structure
+      	sCaption is string
+      	sValue  is string	
+      END
+      
+      // Describes a rectangle
+      STRECT is Structure
+      	x1, y1, x2, y2 are int	// Coordinates of a rectangle
+      END
+      
+      PRIVATE
+      	// Path of the user screen background
+      	gsReferenceWall is string on SIZE_STRING
+      	gsPreviousWall is string
+      
+      	// Height and width of the wallpaper
+      	gnHeight is int
+      	gnWidth is int
+      	
+      	// Array of information that must be displayed on the screen background
+      	garrInformation is ASSOCIATIVE ARRAY of STInformation
+      	
+     type : 720896
+   -
+     code : |1-
+      
+     type : 720898
+  procedures :
+   -
+     name : InformationAdd
+     internal_properties : CAAAAAgAAAD+eTocIbptuZQka2m2CHMqRTIesmalAYbuMFDJuQ5ixzAt+0o5iMS53obSUHbUIRo+DgYbniSxAz6aceZseoy99YbwpJAsm64kTK4dZbI5ItfEpHLWe0DfrcKdrYhVzeiUQ9RI/d6i3dFMR/g58dyFCkheK+VuCa6hHv1JrkaG92O9ZTc0lwbjmTaYoAWBJIel6HMKBY4=
+     procedure_id : 1858352441148262299
+     type_code : 15
+     code : |1-
+      // Summary: Adds some information to display
+      // Syntax:
+      //InformationAdd (<nIdentifier>, <sCaption>, <sValue>)
+      //
+      // Parameters:
+      //	nIdentifier: Unique identifier associated with the information
+      //	sCaption: Caption that describes the information
+      //	sValue: Value to display
+      // Return value:
+      // 	None
+      //
+      // Example:
+      // InformationAdd(1,"IP Address","192.168.0.1")
+      //
+      PROCEDURE InformationAdd(LOCAL nIdentifier,LOCAL sCaption,LOCAL sValue)
+      
+      // Variable
+      tmpInformation is STInformation
+      bFound        is boolean = False
+      
+      // Process the value
+      sValue = ValueOfProcess(sValue)
+      
+      // Does this caption already exist?
+      IF NOT garrInformation[nIdentifier]..Empty THEN
+      	tmpInformation = garrInformation[nIdentifier]
+      	tmpInformation.sCaption = sCaption
+      	tmpInformation.sValue = sValue
+      	garrInformation[nIdentifier] = tmpInformation
+      // New information?
+      ELSE
+      	tmpInformation.sCaption = sCaption
+      	tmpInformation.sValue = sValue
+      		
+      	// Add into the array
+      	garrInformation[nIdentifier] = tmpInformation
+      END
+     type : 458752
+   -
+     name : Initialization
+     internal_properties : CAAAAAgAAAD/QXYcDezc6CFJvFRGiUQRbKxMcKGYxEpW0kt3HvXqHLL8uHrUO7XC4XnU/nYYaULEfISAfcHey9MJCqnlvQ8tRmMM18swnTkP90qUpTbBuwTpw+yrWGjSez5v6A3yO0G+SmKAmgWA/FHoaWlcun5YsEFG5dZhbdch2qPuIfMETG4W6xymPIU4TwF691HV4HGg8ifg+PbTUiZKX/vedTECNAEjS56yaK4r84a9VU9gZVYbaywY
+     procedure_id : 1858354429718189678
+     type_code : 15
+     code : |1+
+      // Summary: Initializes the internal data of the component
+      // Syntax:
+      // Initialization ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	None
+      //
+      // Example:
+      // Initialization()
+      //
+      // MUST NOT BE CALLED, FUNCTION AUTOMATICALLY CALLED
+      //
+      PROCEDURE Initialization()
+      
+      // Variable
+      sImageInfo is string
+      nColor     is int
+      
+      // Create the window
+      OpenChild(WIN_Background)
+      
+      // Initialize the directories
+      IF NOT fDirectoryExist(fDataDirUser()) THEN fMakeDir(fDataDirUser())
+      IF NOT fDirectoryExist(fDataDirUser()+["\"]+REFERENCE_FOLDER) THEN fMakeDir(fDataDirUser()+["\"]+REFERENCE_FOLDER)
+      
+      // Retrieves the screen background
+      API("user32","SystemParametersInfoA",SPI_GETDESKWALLPAPER, SIZE_STRING, &gsReferenceWall,SPIF_UPDATEINIFILE)
+      
+      // Does the user have a screen background?
+      IF (gsReferenceWall <> "") AND (gsReferenceWall <> fDataDirUser()+["\"]+REFERENCE_FILE) THEN
+      	// Current background
+      	gsPreviousWall = gsReferenceWall
+      		
+      	// Did we already write onto the screen wallpaper of the current user for this application?
+      	IF fFileExist(fDataDirUser()+["\"]+REFERENCE_FILE) = True THEN
+      		// Did the user change the screen background?
+      		IF fExtractPath(gsReferenceWall,fDrive+fDirectory)+["\"] <> fDataDirUser()+["\"] THEN
+      			// New reference screen background
+      			fCopyFile(gsReferenceWall,fDataDirUser()+["\"]+REFERENCE_FILE)	
+      		END
+      	ELSE
+      		// Copy the screen background that will be used as reference
+      		fCopyFile(gsReferenceWall,fDataDirUser()+["\"]+REFERENCE_FILE)
+      	END
+      	
+      	gsReferenceWall = fDataDirUser()+["\"]+REFERENCE_FILE
+      	
+      	// Information about the reference image
+      	sImageInfo = BitmapInfo(gsReferenceWall)
+      	
+      	// Image not supported
+      	IF sImageInfo [= "BAD" THEN RETURN
+      	
+      	// Dimensions of the image
+      	gnWidth = ExtractString(sImageInfo, 2)
+      	gnHeight = ExtractString(sImageInfo, 3)
+      	
+      	// Dimension of the elements
+      	WIN_Background..Height = gnHeight
+      	WIN_Background..Width = gnWidth
+      	WIN_Background.IMG_Background..Height = gnHeight
+      	WIN_Background.IMG_Background..Width = gnWidth
+      // No screen background!
+      ELSE IF gsReferenceWall = ""
+      	// Retrieve the color and generate a background with the same color!
+      	nColor = API("user32","GetSysColor",COLOR_DESKTOP)
+      	
+      	gnHeight = SysYRes()
+      	gnWidth = SysXRes()
+      	
+      	// Dimension of the elements
+      	WIN_Background..Height = gnHeight
+      	WIN_Background..Width = gnWidth
+      	WIN_Background.IMG_Background..Height = gnHeight
+      	WIN_Background.IMG_Background..Width = gnWidth
+      	
+      	// Background color of Windows as background color of the image control
+      	WIN_Background.IMG_Background..BrushColor = nColor
+      	
+      	// Create the reference background
+      	gsReferenceWall = fDataDirUser()+["\"]+REFERENCE_FILE
+      	dSaveImageBMP(WIN_Background.IMG_Background,gsReferenceWall)
+      // The current screen background is the reference background
+      ELSE
+      	// Information about the reference image
+      	sImageInfo = BitmapInfo(gsReferenceWall)
+      	
+      	// Image not supported
+      	IF sImageInfo [= "BAD" THEN RETURN
+      	
+      	// Dimensions of the image
+      	gnWidth = ExtractString(sImageInfo, 2)
+      	gnHeight = ExtractString(sImageInfo, 3)
+      	
+      	// Dimension of the elements
+      	WIN_Background..Height = gnHeight
+      	WIN_Background..Width = gnWidth
+      	WIN_Background.IMG_Background..Height = gnHeight
+      	WIN_Background.IMG_Background..Width = gnWidth
+      END
+      
+      // Current wallpaper
+      WIN_Background.IMG_Background = gsReferenceWall
+     type : 458752
+   -
+     name : InformationDisplay
+     internal_properties : CAAAAAgAAADl9awTXaHnt8PVXQjT0ZO73e6Je6ThNtfRzKqlN5E+Nt9gvzTYLnzTx2kGcd5jGiNaF+nZT3J2BNrAVjfSGbDDXeeu2S8AQGaRymn9gKPx+9m9RBLEnjdQF1M8bMcP9rhFSj0z0XPiswNn7+qpyg9y8PdDAv+J1agBL39x8INdGCFb/55W0w6esL+nU9NkMghwPHLoyutekNEC+nFkdt85thdWV7zFlWykqyd1+QgSWnc9Ep2v16mmtdxcQYgPvVTycg==
+     procedure_id : 1858357122663180682
+     type_code : 15
+     code : |1-
+      // Summary: Displays the information added onto the screen
+      // Syntax:
+      //InformationDisplay ([<nPosition>])
+      //
+      // Parameters:
+      // 	nPosition (default value=POSITION_BOTTOM_RIGHT): Position where the information will be displayed
+      // Return value:
+      // 	None
+      //
+      // Example:
+      // InformationDisplay(POSITION_BOTTOM_RIGHT)
+      //
+      // Possible values: POSITION_CENTER, POSITION_TOP_LEFT, POSITION_TOP_RIGHT, POSITION_BOTOM_LEFT, POSITION_BOTTOM_RIGHT
+      // 
+      PROCEDURE InformationDisplay(nPosition=POSITION_BOTTOM_RIGHT)
+      
+      // Variable
+      sImageName       is string on 1024 = fDataDirUser()+["\"]+Today()+"_"+Now()+".bmp"
+      nSizeMax is int
+      sText          is string
+      nTextHeight   is int
+      nYPosition      is int
+      nPositionX      is int
+      
+      // Initializing the control
+      WIN_Background.STC_Information..Font = FontCreate(TEXT_FONT,TEXT_SIZE,iBold)
+      
+      // Retrieve the longest text
+      FOR ALL ELEMENT tmpInformation of garrInformation
+      	sText = tmpInformation.sCaption + ": " + tmpInformation.sValue
+      	nSizeMax = Max(nSizeMax,TextWidth(WIN_Background.STC_Information,sText))
+      END
+      
+      // Retrieve the height of the text
+      nTextHeight = TextHeight(WIN_Background.STC_Information,sText)
+      
+      // Calculate the source X and Y position according to nPosition
+      SWITCH nPosition
+      	CASE POSITION_BOTTOM_RIGHT:
+      		nYPosition = gnHeight - (nTextHeight	* garrInformation..Occurrence)
+      		nPositionX = gnWidth - nSizeMax
+      		
+      	CASE POSITION_BOTTOM_LEFT:
+      		nYPosition = gnHeight - (nTextHeight	* garrInformation..Occurrence)
+      		nPositionX = 0
+      		
+      	CASE POSITION_TOP_RIGHT:
+      		nYPosition = 0
+      		nPositionX = gnWidth - nSizeMax
+      		
+      	CASE POSITION_TOP_LEFT:
+      		nYPosition = 0
+      		nPositionX = 0
+      		
+      	CASE POSITION_CENTER:
+      		nYPosition = (gnHeight / 2) - ((nTextHeight	* garrInformation..Occurrence) / 2)
+      		nPositionX = (gnWidth / 2) - (nSizeMax / 2)
+      	OTHER CASE:
+      		dbgAssert(False,"Unknown position!")
+      END
+      
+      // Calculate while taking the Windows taskbar into account
+      CalcBeginning(nPositionX,nYPosition)
+      
+      // Write the text on the image
+      dStartDrawing(WIN_Background.IMG_Background)
+      FOR ALL ELEMENT tmpInformation of garrInformation
+      	sText = tmpInformation.sCaption + ": " + tmpInformation.sValue
+      	dFont(TEXT_FONT,TEXT_SIZE,iBold,0)
+      	dText(nPositionX,nYPosition,sText,TEXT_COLOR)	
+      	nYPosition += nTextHeight	
+      END
+      
+      // Forces the stretched mode if necessary (if 10, switch to 2)
+      IF GetTypeWallpaper() = TYPE_FILL THEN
+      	SetTypeWallpaper(TYPE_STRETCHED)
+      END
+      
+      // Save the information and display the modified screen background
+      dSaveImageBMP(WIN_Background.IMG_Background,sImageName)
+      API("user32", "SystemParametersInfoA", SPI_SETDESKWALLPAPER, 0, sImageName, SPIF_UPDATEINIFILE)
+      
+      // Delete the previous generated Wallpaper
+      IF gsPreviousWall <> "" THEN fDelete(gsPreviousWall)
+      gsPreviousWall = sImageName
+      
+      // Reinitialize the image for the next display
+      WIN_Background.IMG_Background = gsReferenceWall
+     type : 458752
+   -
+     name : TaskBarPosition
+     internal_properties : CAAAAAgAAABP10VNCCiL6HL6UNNf08eNmvYspndS0DbmkfhYu4PAfz5R8P6TZJS0use6poudW2vktVvl5rdCKIZPLu6nQKrIXIH9vGI/IT3QYLXV4WzdHh3HBvo9rtIV2ZZTeubSxcC55dqkq4JFYreOikpDIzvyVc/CUYk3E5vVbOR45rnrA6fbBrMxr8tTOwEaDdHEnVXuuNE9Wdg0mZlPWI6vKyhnXdiZM8GGP8/8RSySFX5J5UtqVsFyOT9mdU1rGXRy2NEvtkot
+     procedure_id : 1858371416314918024
+     type_code : 15
+     code : |1-
+      // Summary: Returns the position and dimensions of the taskbar
+      // Syntax:
+      //[ <Result> = ] TaskbarPosition (<nX> is int, <nY> is int, <nWidth> is int, <nHeight> is int)
+      //
+      // Parameters:
+      //	nX (integer): (output) Horizontal position of the bar
+      //	nY (integer): (output) Vertical position of the bar
+      //	nWidth (integer): (output) Width of the bar
+      //	nHeight (integer): (output) Height of the bar
+      // Return value:
+      // 	boolean: True if the position of the taskbar was retrieved, False otherwise
+      //
+      PROCEDURE PRIVATE TaskBarPosition(nX is int, nY is int, nWidth is int, nHeight is int)
+      
+      nTaskBarHandle is system int
+      stTaskBarRect  is STRECT
+      
+      // Finds the handle of the taskbar
+      nTaskBarHandle = API("user32", "FindWindowA", "Shell_TrayWnd", "")
+      
+      // If the handle of the taskbar was found
+      IF nTaskBarHandle <> 0 THEN
+      	
+      	// Retrieves the rectangle of the taskbar
+      	API("user32", "GetWindowRect", nTaskBarHandle, &stTaskBarRect)
+      	
+      	// Retrieves the position
+      	nX = stTaskBarRect:x1
+      	nY = stTaskBarRect:y1
+      	
+      	// Calculates the dimensions
+      	nWidth = stTaskBarRect:x2 - stTaskBarRect:x1
+      	nHeight = stTaskBarRect:y2 - stTaskBarRect:y1	
+      	
+      	RESULT True
+      END
+      
+      RESULT False
+     type : 458752
+   -
+     name : CalcBeginning
+     internal_properties : CAAAAAgAAABnalBmRZ59aSJyZwVs8HECGEPPAVZvq8+IOofI6l5yRQBOV1M9F/Ry3pO43/szRsi38lvk8NSve1z5UgtfDUn/ImKTDUPFawF6rFmrKeG9Hl544hS81rxGYsSPeyKaYSqntz5vDIZVGAurfqDwO9Vli9lAils4YhauRA87V4Xe+EJljBS+B2bdJJmwlB6uZX3fQM4skOy4xFet3b4r7EwH+oQpI1zaIOB3kxY5NQYLLb0trBDDr/vDzDPetaywGE0YVJXi5BpfGirtbpJWtAJxxt9qaJzgh/vzB2caeg==
+     procedure_id : 1858371927416079462
+     type_code : 15
+     code : |1+
+      // Summary: Calculates the coordinates according to the positioning of the Windows taskbar
+      // Syntax:
+      //CalcBeginning (<nPositionX>, <nPositionY>)
+      //
+      // Parameters:
+      //	nPositionX: X position to modify
+      //	nPositionY: Y position to modify
+      // Return value:
+      // 	None
+      //
+      // Example:
+      // CalcBeginning(10,10)
+      //
+      PROCEDURE PRIVATE CalcBeginning(nPositionX,nYPosition)
+      
+      // Variables
+      nBx, nBy, nBl, nBh are int
+      
+      // Coordinates of the taskbar
+      TaskBarPosition(nBx, nBy, nBl, nBh)
+      
+      // Taskbar on the left or at the top
+      IF nBx <= 0 THEN
+      	
+      	// Taskbar at the bottom
+      	IF nBy > 0 THEN
+      		// Offset Y with the height of the bar
+      		IF nYPosition > 0 THEN
+      			nYPosition -= nBh
+      		END
+      	// Taskbar at the top
+      	ELSE
+      		IF nYPosition = 0 THEN
+      			nYPosition += nBh
+      		END
+      	END
+      	
+      // Taskbar to the right
+      ELSE
+      	IF nPositionX > 0 THEN
+      		nPositionX -= nBl
+      	END
+      END
+     type : 458752
+   -
+     name : Reinitialize
+     internal_properties : CAAAAAgAAABsmEhG6ImqYB3Gk0DXAsE7mD5R3y8GGJKoGY3PiE96BfoICVybnG8Ve/TJbT2slRxFFDqrw+7i/PuGcqV6j665j0yOOQvVwNxVwXzon221a+mImXJTjGi+f8k5bwqyLC3mBIm/ZIoGHTgs7JmuEVX+i1DAOWZebSbyDnIqFbIL3EWEQHFv/sagoaScgsLZYO9oIT+2hst1mSOTLuqnnwBwLev7MPluYX4GbSOxvmIW1/fYx8rVJzXY6N9N6NYznCUnGsZycjQbpauF
+     procedure_id : 1858384979791448170
+     type_code : 15
+     code : |1-
+      // Summary: Repositions the initial screen background
+      // Syntax:
+      // Reinitialize ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	None
+      //
+      // Example:
+      // Reinitialize()
+      //
+      PROCEDURE Reinitialize()
+      
+      // Reinitialize the wallpaper
+      API("user32","SystemParametersInfoA",SPI_SETDESKWALLPAPER, 0, gsReferenceWall,SPIF_UPDATEINIFILE)
+      
+      // Delete the former one
+      IF gsPreviousWall <> "" THEN fDelete(gsPreviousWall)
+      gsPreviousWall = ""
+     type : 458752
+   -
+     name : ValueOfProcess
+     internal_properties : CAAAAAgAAADmqYYZ5atDs+RfvOyRdclRe+Io1ch8pUoMc9mM+dwPSRPBfYcLyjoC+aEOJSi+JrPqYBRwVd+EZTw9VETkBg+umRvL8OfHbVBLg/8tFUpPvJNSuyNskzyUrmPhcLdqxHsYXpZq0+iojHn9qNCQqcymLvsQVbeYh9t9M/KvzSjewFMrYC3KuLg5TE2woz6X3+j7lfw+eYsZzmJT2vjmUmcCyRYf1UosIRBiuzDQH34evN5zq1Yze55kdrOYkLVrkQ==
+     procedure_id : 1858728559989862422
+     type_code : 15
+     code : |1+
+      // Summary: Used to return an information associated with a preset string
+      // Syntax:
+      //[ <Result> = ] ValueOfProcess (<sValue>)
+      //
+      // Parameters:
+      //	sValue: Value
+      // Return value:
+      // 	string: //  	 	None
+      //
+      // Example:
+      // Indicate an example.
+      //
+      PROCEDURE PRIVATE ValueOfProcess(sValue)
+      
+      // Variable
+      sReturn  is string
+      sFormatted is string
+      
+      // Format in lowercase
+      sFormatted = StringFormat(sValue,ccIgnoreAccent+ccIgnoreSpace+ccLowCase)
+      
+      SWITCH sFormatted
+      	CASE "<ipaddress>":
+      		sReturn = NetIPAddress()
+      	CASE "<hostname>":
+      		sReturn = NetMachineName()
+      	CASE "<todaytime>":
+      		sReturn = TimeToString(Now(),"HH:MM")
+      	CASE "<today>":
+      		sReturn = DateToString(Today(),"MM/DD/YYYY")
+      	CASE "<diskspace>":
+      		// Lists the disks
+      		sDiskList is string 
+      		sDiskList = fListDisk()
+      		
+      		// For each disk
+      		FOR EACH STRING ADisk OF sDiskList SEPARATED BY CR
+      			IF fDriveInfo(ADisk,fdDriveType) = fdFixed THEN				
+      				sReturn += [CR] + ADisk + " "+ LengthToString(fDriveInfo(ADisk,fdTotalSpace) - fDriveInfo(ADisk,fdFreeSpace),sizeGB) + " / " +  LengthToString(fDriveInfo(ADisk,fdTotalSpace),sizeGB)
+      			END
+      		END
+      		
+      	OTHER CASE :
+      		sReturn = sValue
+      END
+      
+      RESULT sReturn
+      
+     type : 458752
+   -
+     name : InformationDelete
+     procedure_id : 1858729028141341025
+     type_code : 15
+     code : |1+
+      // Summary: Deletes an information from the list
+      // Syntax:
+      //InformationDelete (<nIdentifier>)
+      //
+      // Parameters:
+      // 	nIdentifier: Identifier of the information
+      // Return value:
+      // 	None
+      //
+      // Example:
+      // InformationDelete(1)
+      //
+      PROCEDURE InformationDelete(nIdentifier)
+      
+      IF NOT garrInformation[nIdentifier]..Empty THEN
+      	ArrayDelete(garrInformation,nIdentifier)
+      END
+      
+     type : 458752
+   -
+     name : GetTypeWallpaper
+     internal_properties : CAAAAAgAAABOto2oVczU9CsHOg5qbMKL7hDiOVZdOSsHvKsOToRTjHGVOzhVhmEWc/tB+8SNWwE4e2YJPskFNVQarRgOefJLIghFpUOWWDeP4aK4Z5D9++EfwuXLUUTq5SdO9hCzIS22vhJ7ysiwrrPHJhc9kc1bg6ealsImQTLqnBpd1me5ENf2I+xpHmf2JikiyndFf29r1NZ/mPpN
+     procedure_id : 2082135565973953408
+     type_code : 15
+     code : |1-
+      // Summary: Retrieves the type of wallpaper
+      // Syntax:
+      //[ <Result> = ] GetWallpaperType ()
+      //
+      // Parameters:
+      //	None
+      // Return value:
+      // 	string: //  	 	None
+      //
+      // Example:
+      // Indicate an example.
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      // Automatic process of exceptions:   run CASE EXCEPTION:
+      //
+      
+      PROCEDURE PRIVATE GetTypeWallpaper()
+      
+      // Variables
+      bExecution is boolean
+      sType      is string
+      
+      // Read
+      sType = RegistryQueryValue("HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", bExecution)
+      
+      RESULT sType
+      
+      CASE Error:
+      	RESULT sType
+      CASE EXCEPTION:
+      	RESULT sType
+     type : 458752
+   -
+     name : SetTypeWallpaper
+     internal_properties : CAAAAAgAAAAu1i0Iu1Q8rN/Toi5+1EIj+lQWMUKNUfujCLOW8mxLtIX5d9j5JnmWJ49560ANOyGk/woZOrnVBaBW5ciiydpTjvyZvWc2KKfztcpOkU5buX8RzOuJ34JkY9G4vAIhv3N8iFQ56PZ+4OG5IL2PtwMR0YH8tLgUNywQdnyjEN0vbn3IDfpPPDWAjPtMQMGr/Y1JNrYf+Fqt
+     procedure_id : 2082135591743829490
+     type_code : 15
+     code : |1+
+      // Summary: Positions the type of wallpaper
+      // Syntax:
+      //[ <Result> = ] SetWallpaperType (<sWallpaperType>)
+      //
+      // Parameters:
+      //	sWallpaperType: <specify the role of nWallpaperType>
+      // Return value:
+      // 	boolean: // 	None
+      //
+      // Example:
+      // Indicate an example.
+      //// Automatic process of errors:   run the block of code CASE ERROR
+      //
+      // Automatic process of exceptions:   run CASE EXCEPTION:
+      //
+      
+      PROCEDURE PRIVATE SetTypeWallpaper(sWallpaperType)
+      
+      // Variables
+      bExecution is boolean = False
+      
+      // Writing
+      RegistrySetValue("HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", sWallpaperType)
+      
+      CASE Error:
+      	RESULT bExecution
+      CASE EXCEPTION:
+      	RESULT bExecution
+      
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : COL_Collection1
+resources :
+ string_res :
+  identifier : 0x19ca3191021dc24e
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ

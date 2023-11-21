@@ -1,0 +1,102 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : WIN_Background
+ major_version : 28
+ minor_version : 0
+ type : 2
+ description : ""
+ subtype : 0
+window :
+ name : WIN_Background
+ identifier : 0x26b0b07a026a75fb
+ internal_properties : CAAAAAgAAABNQiBYeoZZAC7mDc1Zrcq7+Lvg6asxx493E87564UD3e1mtlK8//AOHvAmAwVTzgI4RsPoaSLxqBLUMaK9eSUi3uky8Wp/pYq5i2zGWQFQFbud6STLhKrGKlqX4Xqx0WfKhxXfYvF4XW1Bt5y5C3nJ5lqPaN2xbTaApFZ42nnaCXed4gPBoOSrP43yOAyF2bRhIWqC6IOBfZtaa4BP28saPL968kvqcTT2oZO+N23lY9k5M/Jgs+b7EWZ8nGhb1CYNUJHtB9SquUre4mxPniFur1u0ybbyuXX7ES1sS1qfeY0/CLYAbIEXvaqweefJbIJhsV1g65RhMz4APZQOSQKoJFGKeSStd+TT87Nj8dDo7DW/Tvl2SlcNX2ypwM6TVkzZ3qCgefuaZe8C2ucIBw7a4J0MrxEqhutRNCbsX69lAZGVU8MoMcEiANSxKWU+bUdZyUUojWr2frns4fRlVN9kdtVQueaTIGMMsc9Dil8N10y0wEXMNqaLbrsDBikbkydR13AaE7aSccBjhMG0BQ8XInDtMziA8i0xYya+Hk673ILJRzHeebJi0a7yQciX7KgmE6JVq25YS2GZ4IIkmdOZir+xTJd4QxyWtFE9TgkwglMdLzjrWIkaadSrtEr3/pX7wLNNKwS6mHnhHbtB8RBt6NUf+JeMGclKW0nQwmFeQYDcyEEVmuYFelTk7WqEYeRPs/FQqPkSeYgvHaQMfSHZCOtuNrzsaTkTRMw=
+ properties :
+  width : 441
+  height : 317
+  widthClient : 439
+  heightClient : 315
+ controls :
+  -
+    name : IMG_Background
+    identifier : 0x26b0b07a026b75fb
+    internal_properties : CAAAAAgAAACk9jc159ynva2op5XRlt6F7cSbhggOaO0nNiFpeDcKvdT28MfAmxkVyXVAffRertgFhCiVns4puSZkuidEPlVLfQGc1aXRyey2qkZ1eyQwydAGVK/2mFt9t+B5STcoqjZpr4GMJzd9BCYSJ+bI+iOYhgVSC7jgfAINGz1Du/O0Zu9Dck22Z3tRdMZyytu7i3OQS8tFrnO/bP/nkUybJziVvKYk0oYf3U6X926AhRycB+CYVgqPuPQvvHZolYQXOlyd7xPyjauZ18dOErcoNiDAJj0031eDJuIZkPRlZ6/HSuPNWL5LYU14s2SbJzxXTNvxvf9ajwBt4S0XuXd2QslIhojyzt/pl19CQivQxvt8GR9kwVaU0AvCUNC5Ugt0Q/9Qubj3bw7x8iySiV+aUOK9AxmQnGcdVart6SdhhCwMhC7jLAH1BWbS8QO6VUZNeep1sdSuT/nYrLLvfY3LVUMOQbUSiGp80xMBU6JNnX8Bp5sLnnOvSuUNDK8jSe8Cpr8ONh4p7juwmQ9ucJwitkh6qi5bu5QeCbsMFMX9KnO7wVGV
+    properties :
+     x : 6
+     y : 6
+     width : 428
+     height : 302
+    type : 8
+    code_elements :
+     type_code : 8
+     p_codes : []
+  -
+    name : STC_Information
+    identifier : 0x26b0b07a026c75fb
+    internal_properties : CAAAAAgAAABVpcL9GiUsYBlwJnGhSpKv/pW+SwxfbMA+DfX3JF1UQIybMlBPpdtv/B9vZEqmVs7uOqwukln+C4rukOievlj5+U/NCg/aZNmwwe703Jt6RbgrNjUKNQ8QhYR6f2MOnn/Vp1nDtshqG4n2H4MRzzhXP4aWSTUl/iTxFNhBf5zen6zzAdP93DbmCWTBN/etLKXR8rBADNQG2opwmmfQgc1PEskY+n5m/fyywf02HJfLgKeFwDbSc8s3gu0OytPYuhI64veB76xkAvK/FddqL08pKZL5GY76wtEjw9/Li5+5U8WbJFezd3xx1vUO1EWJhA95Ztl0ClKwTRJp2sZw008YXSRueQV9GprlDnxqpsE=
+    properties :
+     x : -5
+     y : 325
+     width : 449
+     height : 20
+    type : 3
+    code_elements :
+     type_code : 2
+     p_codes :
+      -
+        code : |1-
+         
+        type : 18
+ menu :
+  name : _Menu
+  identifier : 0x29ca341d8edcb81c
+  internal_properties : CAAAAAgAAADkz5m2KxCUzVIhDZiiF5QcLAHqCxGFlanj8oiwGF43GKay+h2f6FMFEPoS+D21QcnkFoNR6HU+/OmMw169nE+qfbvFWZNcGUWa0btZcavT078S4P2ewiQR272V8qtxFuak+3Uu2ceVzPkDW8gkMvzNK+AVQVQ+U0ngiRZPO73VFoM3nW3VE8PYv7HnrsaTUI75myFvh0m9rCmri2nS67CwcKjWbj8Uu3csagWBUMhDJ/AaW2/CiN36FTuR3n+7tkbXGuWiQ2HZYmLoGhZI0OYB3A5vYoC7Fr0NHzei
+  options : []
+ languages :
+  - en-GB
+ popup_menus : []
+ message_bar :
+  internal_properties : CAAAAAgAAAD/OSmMCI3D1L8Y0JgiWDZYxVNpZgGncfhSkjQKd92GHBfY+1iP9zkLyIYcfmkKZXCYM7VqeAGVQg3ypfKowE8ZWeNSLFjRPmR+7RSKrtbtFtcMZnajH0FUbxKjOA==
+ actionbar : {}
+ code_elements :
+  type_code : 1
+  p_codes :
+   -
+     code : |1+
+      // Summary: <specify the procedure action>
+      // Parameters:
+      //	None
+      // Return Value:
+      // 	None
+      //
+      
+   -
+     type : 180
+     enabled : false
+   -
+     type : 230
+     enabled : false
+   -
+     code : |1-
+      
+     type : 40
+   -
+     type : 11
+   -
+     type : 12
+   -
+     type : 17
+   -
+     type : 13
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+resources :
+ string_res :
+  identifier : 0x19ca341702219d80
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAAC68/W0/adbG0nFCRhrE42B5HRnbDzVHaz86sSQyxlBk7I=
+associated_test :
+ name : TEST_Background.wxt
+rad :
+ internal_properties : CAAAAAgAAABoAN7PLpwJW3EiA7WVZdCA5EwrCA1rvutcDHooMWKe
